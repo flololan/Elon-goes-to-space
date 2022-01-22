@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/">
+        <file>case1.png</file>
+        <file>case3.png</file>
+        <file>case4.png</file>
+        <file>case5.png</file>
+        <file>case2.jpg</file>
+        <file>case6.png</file>
+        <file>bateau.png</file>
+        <file>case0.png</file>
+        <file>bonhomme.png</file>
+        <file>casefin.png</file>
+        <file>case7.png</file>
+    </qresource>
+</RCC>

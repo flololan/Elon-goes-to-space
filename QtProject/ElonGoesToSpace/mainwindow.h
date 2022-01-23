@@ -24,6 +24,8 @@ private slots:
     void on_startButton_clicked();
     void on_exitButton_clicked();
 
+    void on_joystickButton_pressed();
+
 private:
     Ui::MainWindow *ui;
     HapticController *hapticController;

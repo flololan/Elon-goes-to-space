@@ -180,13 +180,6 @@ void MainWindow::deactivateEffect(Effect effect)
      }
 }
 
-void MainWindow::on_startButton_clicked()
-{
-    goToNextScene();
-    // ui->startButton->hide();
-}
-
-void MainWindow::on_exitButton_clicked()
-{
-    QApplication::quit();
-}
+void MainWindow::on_startButton_clicked() { goToNextScene(); }
+void MainWindow::on_joystickButton_pressed() { goToNextScene(); }
+void MainWindow::on_exitButton_clicked() { QApplication::quit(); }

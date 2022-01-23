@@ -37,6 +37,7 @@ private:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void goToScene(int sceneIndex);
     void goToNextScene();
 
     void activateEffect(Effect effect);

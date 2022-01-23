@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->exitButton->setVisible(false);
     // Pour initialiser l'scenes, on appelle goToNextScene sans changer le numéro de page (qui est donc à 0)
     this->hapticController = new HapticController(this);
-    goToNextScene();
+    this->goToScene(0);
 }
 
 MainWindow::~MainWindow()
@@ -104,20 +104,24 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     draggable = false;
 }
 
-void MainWindow::goToNextScene()
-{
-    this->deactivateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
+void MainWindow::goToNextScene(){
+     this->deactivateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
     scenes.currentScene++;
-    this->activateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
+    this->goToScene( scenes.currentScene);
+}
+
+void MainWindow::goToScene(int sceneIndex)
+{
+    this->activateHapticEffect(scenes.hapticEffects[sceneIndex]);
     draggable = false;
     effects = scenes.listTriggeredEffects(QPoint(ui->draggableItem->x(), ui->draggableItem->y()));
 
-    ui->scene->setPixmap((QPixmap((scenes.scenes[scenes.currentScene]).ressource->c_str())));
+    ui->scene->setPixmap((QPixmap((scenes.scenes[sceneIndex]).ressource->c_str())));
 
-    if(scenes.currentScene == 1) {
+    if(sceneIndex == 1) {
         ui->draggableItem->move(0, 400);
     }
-    if (scenes.currentScene == 3 )
+    if (sceneIndex == 3 )
     {
         ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_elon_on_rocket_to_iss.png").scaled(QSize(200, 200), Qt::KeepAspectRatio));
         ui->draggableItem->setFixedWidth(200);
@@ -130,8 +134,8 @@ void MainWindow::goToNextScene()
 
     // Place item on start position
     ui->draggableItem->move(
-            scenes.scenes[scenes.currentScene].cursorPosition.x(),
-            scenes.scenes[scenes.currentScene].cursorPosition.y()
+            scenes.scenes[sceneIndex].cursorPosition.x(),
+            scenes.scenes[sceneIndex].cursorPosition.y()
     );
 
     /*

@@ -3,9 +3,6 @@
 
 Scenes::Scenes()
 {
-
-    // Création à la main des pages de l'album
-    // Attention, voir album.hpp pour le nombre de pages
     currentScene = 0;
 
     // TODO : Refaire les rectangles de collision

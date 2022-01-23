@@ -19,21 +19,18 @@ Scenes::Scenes()
     hapticEffects[0] = HapticEffect();
 
     hapticEffects[1] = HapticEffect(); // LIT
-    hapticEffects[1].addEffect(Effect(QPoint(0, 500), QPoint(500, 768), EffectType::GROUND));
+    hapticEffects[1].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GROUND));
 
     hapticEffects[2] = HapticEffect();
-    // hapticEffects[2].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::VORTEX));
+    hapticEffects[2].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::STICK));
 
     hapticEffects[3] = HapticEffect();
-    // hapticEffects[3].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GEANT));
+    hapticEffects[3].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::PARKING));
 
     hapticEffects[4] = HapticEffect();
-    // hapticEffects[4].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::SABLE));
-    // hapticEffects[4].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GEANT));
+    hapticEffects[4].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::DOOR));
 
-    hapticEffects[5] = HapticEffect(); // petit niveau va sur bateau
-    // hapticEffects[5].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::SABLE));
-    // hapticEffects[5].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GEANT));
+    hapticEffects[5] = HapticEffect();
 }
 
 /**

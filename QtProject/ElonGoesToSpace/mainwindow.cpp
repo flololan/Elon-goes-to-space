@@ -48,12 +48,11 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     {
         switch (scenes.currentScene) // Le switch pour dire que dans certaines pages, on peut bouger aussi verticalement. C'est pas super beau, mais plus rapide que l'ajout d'un champ
         {
-        case 2: // page vortex
-        case 7: // page du g"ant qui l'avale
+        default:
             ui->draggableItem->move(event->x(), event->y());
             break;
-        default:
-            ui->draggableItem->move(event->x(), 300);
+        case 1:
+            ui->draggableItem->move(event->x(), 400);
             break;
         }
 
@@ -159,13 +158,13 @@ void MainWindow::deactivateEffect(Effect& effect)
      }
 }
 
-void MainWindow::onExitButtonClicked()
-{
-    QApplication::quit();
-}
-
 void MainWindow::on_startButton_clicked()
 {
     goToNextScene();
     // ui->startButton->hide();
+}
+
+void MainWindow::on_exitButton_clicked()
+{
+    QApplication::quit();
 }

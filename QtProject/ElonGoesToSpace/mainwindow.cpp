@@ -53,7 +53,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
             ui->draggableItem->move(event->x(), event->y());
             break;
         default:
-            ui->draggableItem->move(event->x(), ui->draggableItem->y());
+            ui->draggableItem->move(event->x(), 300);
             break;
         }
 
@@ -71,7 +71,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
         { // avant de changer de page on supprime les effets
             this->deactivateEffect(*it);
         }
-        scenes.currentScene++;
         goToNextScene();
     }
 }
@@ -90,6 +89,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
 void MainWindow::goToNextScene()
 {
+    scenes.currentScene++;
     draggable = false;
     effects = scenes.listTriggeredEffects(QPoint(ui->draggableItem->x(), ui->draggableItem->y()));
 
@@ -99,27 +99,25 @@ void MainWindow::goToNextScene()
 
     // On change l'apparence du personnage selon la valeur de bateau
 
-    /*
-    * @todo replace with elon and dragon
-    */
-    /*
-    if (scenes.pages[scenes.currentScene].bateau)
+    if(scenes.currentScene == 1) {
+        ui->draggableItem->move(0, 400);
+    }
+    if (scenes.currentScene == 3 )
     {
-        ui->draggableItem->setPixmap(QPixmap(":/bateau.png").scaled(QSize(200, 200), Qt::KeepAspectRatio));
+        ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_elon_on_rocket_to_iss.png").scaled(QSize(200, 200), Qt::KeepAspectRatio));
         ui->draggableItem->setFixedWidth(200);
         ui->draggableItem->setFixedHeight(200);
     }
     else
     {
-        ui->draggableItem->setPixmap(QPixmap(":/draggableItem.png").scaled(QSize(100, 100), Qt::KeepAspectRatio));
-
-        ui->draggableItem->setFixedWidth(65);
-        ui->draggableItem->setFixedHeight(100);
+        ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_tiny_elon.png").scaled(QSize(100, 100), Qt::KeepAspectRatio));
     }
-    */
 
     // Place item on start position
-    ui->draggableItem->move(scenes.scenes[scenes.currentScene].cursorPosition.x(), scenes.scenes[scenes.currentScene].cursorPosition.y());
+    ui->draggableItem->move(
+                scenes.scenes[scenes.currentScene].cursorPosition.x(),
+            scenes.scenes[scenes.currentScene].cursorPosition.y()
+    );
 
     /*
     * @todo Find a better way to handle scene index
@@ -130,10 +128,13 @@ void MainWindow::goToNextScene()
 
 void MainWindow::activateEffect(Effect& effect)
 {
+    qDebug() << "start effect";
     if (effect.isActive)
         return;
+    qDebug() << "start effect success";
 
     effect.isActive = true;
+
     switch (effect.effectType)
     {
     case EffectType::GROUND:
@@ -147,7 +148,6 @@ void MainWindow::activateEffect(Effect& effect)
 
 void MainWindow::deactivateEffect(Effect& effect)
 {
-
     if (!effect.isActive)
         return;
 
@@ -170,7 +170,6 @@ void MainWindow::onExitButtonClicked()
 
 void MainWindow::on_startButton_clicked()
 {
-    scenes.currentScene++;
     goToNextScene();
     ui->startButton->hide();
 }

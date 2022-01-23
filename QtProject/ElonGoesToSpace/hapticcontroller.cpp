@@ -22,7 +22,7 @@ HapticController::HapticController(MainWindow *fen) : mWindow(fen)
     {
         qDebug() << "IFR project has been loaded";
 
-        mGround = mProject->CreateEffect("Scene-4-circle", mMouse, IMM_PARAM_NODOWNLOAD);
+        mGround = mProject->CreateEffect("Scene1-ground", mMouse, IMM_PARAM_NODOWNLOAD);
         if (!mGround)
         {
             qDebug() << "===>Error loading the ground effect";

@@ -16,11 +16,10 @@ Scenes::Scenes()
     scenes[4] = Scene(":/assets/scenesimages/scene_iss_door.png", QPoint(900, 570), QPoint(0, 0), QPoint(20, 768));
     scenes[5] = Scene(":/assets/scenesimages/scene_end.png", QPoint(900, 570), QPoint(0, 0), QPoint(450, 768));
 
-    // création modèle vibratoir (haha ça sonne tellement faux)
     hapticEffects[0] = HapticEffect();
-    hapticEffects[0].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GROUND));
 
     hapticEffects[1] = HapticEffect(); // LIT
+    hapticEffects[1].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GROUND));
 
     hapticEffects[2] = HapticEffect();
     // hapticEffects[2].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::VORTEX));

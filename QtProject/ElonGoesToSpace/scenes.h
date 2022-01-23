@@ -11,7 +11,7 @@ public:
     /**
      * @brief sceneAmount : Defines the amount of scenes
      */
-    static const int scenesAmount = 6;
+    static const int scenesAmount = 7;
 
     int currentScene;
 

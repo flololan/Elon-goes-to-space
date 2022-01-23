@@ -12,6 +12,7 @@ Scenes::Scenes()
     scenes[3] = Scene(":/assets/scenesimages/scene_iss.png", QPoint(800, 570), QPoint(0, 0), QPoint(20, 768));
     scenes[4] = Scene(":/assets/scenesimages/scene_iss_door.png", QPoint(900, 570), QPoint(0, 0), QPoint(20, 768));
     scenes[5] = Scene(":/assets/scenesimages/scene_end.png", QPoint(900, 570), QPoint(0, 0), QPoint(450, 768));
+    scenes[6] = Scene(":/assets/scenesimages/scene_bye.png", QPoint(900, 570), QPoint(0, 0), QPoint(450, 768));
 
     hapticEffects[0] = HapticEffect();
 
@@ -29,6 +30,7 @@ Scenes::Scenes()
     hapticEffects[4].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::DOOR));
 
     hapticEffects[5] = HapticEffect();
+    hapticEffects[6] = HapticEffect();
 }
 
 /**

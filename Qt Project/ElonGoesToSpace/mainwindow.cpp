@@ -92,15 +92,17 @@ void MainWindow::goToNextScene()
 {
     draggable = false;
     effects = scenes.listTriggeredEffects(QPoint(ui->draggableItem->x(), ui->draggableItem->y()));
+    ui->
+    ui->label->setPixmap((QPixmap((scenes.scenes[scenes.currentScene]).ressource->c_str())));
 
-    // On change l'image de fond
-    ui->label->setPixmap((QPixmap((scenes.pages[scenes.currentScene]).ressource->c_str())));
+    qDebug() << "update scene";
 
     // On change l'apparence du personnage selon la valeur de bateau
 
     /*
     * @todo replace with elon and dragon
     */
+    /*
     if (scenes.pages[scenes.currentScene].bateau)
     {
         ui->draggableItem->setPixmap(QPixmap(":/bateau.png").scaled(QSize(200, 200), Qt::KeepAspectRatio));
@@ -114,31 +116,19 @@ void MainWindow::goToNextScene()
         ui->draggableItem->setFixedWidth(65);
         ui->draggableItem->setFixedHeight(100);
     }
+    */
 
     // Place item on start position
-    ui->draggableItem->move(scenes.pages[scenes.currentScene].position_draggableItem.x(), scenes.pages[scenes.currentScene].position_draggableItem.y());
+    ui->draggableItem->move(scenes.scenes[scenes.currentScene].cursorPosition.x(), scenes.scenes[scenes.currentScene].cursorPosition.y());
 
     /*
     * @todo Find a better way to handle scene index
     */
-    if (scenes.currentScene == 8)
+    if (scenes.currentScene == 5)
         ui->exitButton->setVisible(true);
 }
 
-/**
- * @brief MainWindow::onButtonClicked : Action on clic du bouton page suivante
- */
-void MainWindow::onButtonClicked()
-{
-    if (scenes.currentScene < scenes.scenesAmount - 1)
-        scenes.currentScene++;
-    goToNextScene();
-
-    // On désactive le bouton, qui n'a lieu d'être que sur la première page pour lancer l'aventure (pour le moment)
-    ui->button->hide();
-}
-
-void MainWindow::activateEffect(Effect &effect)
+void MainWindow::activateEffect(Effect& effect)
 {
     if (effect.isActive)
         return;
@@ -146,49 +136,16 @@ void MainWindow::activateEffect(Effect &effect)
     effect.isActive = true;
     switch (effect.effectType)
     {
-    case EffectType::SABLE:
-        if (hapticController->GetSable())
+    case EffectType::GROUND:
+        if (hapticController->GetGround())
         {
-            hapticController->GetSable()->Start();
-        }
-        break;
-    case EffectType::EAU:
-        if (hapticController->GetEau())
-        {
-            hapticController->GetEau()->Start();
-        }
-        break;
-    case EffectType::VAGUE:
-        if (hapticController->GetVague())
-        {
-            hapticController->GetVague()->Start();
-        }
-
-        break;
-    case EffectType::VORTEX:
-        if (hapticController->GetVortex())
-        {
-            hapticController->GetVortex()->Start();
-        }
-
-        break;
-    case EffectType::GEANT:
-        if (hapticController->GetGeant())
-        {
-            hapticController->GetGeant()->Start();
-        }
-        break;
-
-    case EffectType::BOUCHE:
-        if (hapticController->GetBouche())
-        {
-            hapticController->GetBouche()->Start();
+            hapticController->GetGround()->Start();
         }
         break;
     }
 }
 
-void MainWindow::deactivateEffect(Effect &effect)
+void MainWindow::deactivateEffect(Effect& effect)
 {
 
     if (!effect.isActive)
@@ -197,47 +154,23 @@ void MainWindow::deactivateEffect(Effect &effect)
     effect.isActive = false;
     switch (effect.effectType)
     {
-    case EffectType::SABLE:
-        if (hapticController->GetSable())
+    case EffectType::GROUND:
+        if (hapticController->GetGround())
         {
-            hapticController->GetSable()->Stop();
+            hapticController->GetGround()->Stop();
         }
         break;
-    case EffectType::EAU:
-        if (hapticController->GetEau())
-        {
-            hapticController->GetEau()->Stop();
-        }
-        break;
-    case EffectType::VAGUE:
-        if (hapticController->GetVague())
-        {
-            hapticController->GetVague()->Stop();
-        }
-        break;
-    case EffectType::VORTEX:
-        if (hapticController->GetVortex())
-        {
-            hapticController->GetVortex()->Stop();
-        }
-        break;
-    case EffectType::GEANT:
-        if (hapticController->GetGeant())
-        {
-            hapticController->GetGeant()->Stop();
-        }
-        break;
-
-    case EffectType::BOUCHE:
-        if (hapticController->GetBouche())
-        {
-            hapticController->GetBouche()->Stop();
-        }
-        break;
-    }
+     }
 }
 
 void MainWindow::onExitButtonClicked()
 {
     QApplication::quit();
+}
+
+void MainWindow::on_startButton_clicked()
+{
+    scenes.currentScene++;
+    goToNextScene();
+    ui->startButton->hide();
 }

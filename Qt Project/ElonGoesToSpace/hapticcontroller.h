@@ -19,13 +19,7 @@ public:
     HapticController(MainWindow *fen);
     ~HapticController();
 
-    // méthodes album-enfant
-    CImmCompoundEffect *GetEau() const;
-    CImmCompoundEffect *GetSable() const;
-    CImmCompoundEffect *GetGeant() const;
-    CImmCompoundEffect *GetVortex() const;
-    CImmCompoundEffect *GetVague() const;
-    CImmCompoundEffect *GetBouche() const;
+    CImmCompoundEffect *GetGround() const;
 
 private:
     CImmMouse *mMouse;
@@ -33,12 +27,7 @@ private:
     MainWindow *mWindow;
 
     // attributs album-enfant
-    CImmCompoundEffect *mEau;
-    CImmCompoundEffect *mSable;
-    CImmCompoundEffect *mGeant;
-    CImmCompoundEffect *mVortex;
-    CImmCompoundEffect *mVague;
-    CImmCompoundEffect *mBouche;
+    CImmCompoundEffect *mGround;
 };
 
-#endif // HAPTICCONTROLLER_H
+#endif

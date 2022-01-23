@@ -1,7 +1,7 @@
 #ifndef ALBUM_H
 #define ALBUM_H
 #include "scene.h"
-#include "hapticeffects.h"
+#include "hapticeffect.h"
 
 class Scenes
 {
@@ -19,7 +19,7 @@ public:
      * @brief scenes[] Table of the scenes
      */
     Scene scenes[scenesAmount];
-    HapticEffects hapticEffects[scenesAmount];
+    HapticEffect hapticEffects[scenesAmount];
 
     bool collided(int x, int y);
     bool triggersEffect(QPoint cursorPosition);

@@ -18,56 +18,16 @@ HapticController::HapticController(MainWindow *fen) : mWindow(fen)
     }
 
     mProject = new CImmProject();
-    if (mProject->OpenFile("C:\\Users\\M2IHM\\Desktop\\retour-haptique\\effets.ifr", mMouse))
-    { //le chemin par dfaut est celui o se trouve la gnration : xxx-build-desktop/
-        qDebug() << "Projet ifr charg";
+    if (mProject->OpenFile("C:\\Users\\M2IHM\\Desktop\\Projet Retour Haptique de Jojo et Flo\\Qt Project\\ElonGoesToSpace\\assets\\HapticEffects.ifr", mMouse))
+    {
+        qDebug() << "IFR project has been loaded";
 
-        mEau = mProject->CreateEffect("Eau", mMouse, IMM_PARAM_NODOWNLOAD);
-        if (!mEau)
+        mGround = mProject->CreateEffect("Scene-4-circle", mMouse, IMM_PARAM_NODOWNLOAD);
+        if (!mGround)
         {
-            qDebug() << "===>Erreur chargement eau ";
-            delete mEau;
-            mEau = NULL;
-        }
-
-        mSable = mProject->CreateEffect("Sable", mMouse, IMM_PARAM_NODOWNLOAD);
-        if (!mSable)
-        {
-            qDebug() << "===>Erreur chargement sable ";
-            delete mSable;
-            mSable = NULL;
-        }
-
-        mGeant = mProject->CreateEffect("Geant", mMouse, IMM_PARAM_NODOWNLOAD);
-        if (!mGeant)
-        {
-            qDebug() << "===>Erreur chargement Geant ";
-            delete mGeant;
-            mGeant = NULL;
-        }
-
-        mVortex = mProject->CreateEffect("Vortex", mMouse, IMM_PARAM_NODOWNLOAD);
-        if (!mVortex)
-        {
-            qDebug() << "===>Erreur chargement Vortex ";
-            delete mVortex;
-            mVortex = NULL;
-        }
-
-        mVague = mProject->CreateEffect("Vague", mMouse, IMM_PARAM_NODOWNLOAD);
-        if (!mVague)
-        {
-            qDebug() << "===>Erreur chargement Vague ";
-            delete mVague;
-            mVague = NULL;
-        }
-
-        mBouche = mProject->CreateEffect("Bouche", mMouse, IMM_PARAM_NODOWNLOAD);
-        if (!mBouche)
-        {
-            qDebug() << "===>Erreur chargement Vague ";
-            delete mBouche;
-            mBouche = NULL;
+            qDebug() << "===>Error loading the ground effect";
+            delete mGround;
+            mGround = NULL;
         }
     }
     else
@@ -77,50 +37,10 @@ HapticController::HapticController(MainWindow *fen) : mWindow(fen)
 }
 
 HapticController::~HapticController()
-{ /*
-    if (mEau)
-        delete mEau;
-    if (mVortex)
-        delete mVortex;
-    if (mSable)
-        delete mSable;
-    if (mGeant)
-        delete mGeant;
-    //if (mVague)
-      //  delete mVague;
-    if(mMouse)
-        delete mMouse;
-    if(mProject)
-        delete mProject;*/
-}
+{ }
 
 // propre méthodes
-CImmCompoundEffect *HapticController::GetEau() const
+CImmCompoundEffect *HapticController::GetGround() const
 {
-    return mEau;
-}
-
-CImmCompoundEffect *HapticController::GetVortex() const
-{
-    return mVortex;
-}
-
-CImmCompoundEffect *HapticController::GetSable() const
-{
-    return mSable;
-}
-
-CImmCompoundEffect *HapticController::GetGeant() const
-{
-    return mGeant;
-}
-
-CImmCompoundEffect *HapticController::GetVague() const
-{
-    return mVague;
-}
-
-CImmCompoundEffect *HapticController::GetBouche() const
-{
-    return mBouche;
+    return mGround;
 }

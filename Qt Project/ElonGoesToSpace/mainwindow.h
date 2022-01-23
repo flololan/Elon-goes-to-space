@@ -16,15 +16,16 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    Scenes scenes;
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
 private slots:
-    void onButtonClicked();
-
     void onExitButtonClicked();
 
     //void on_exitButton_clicked();
+
+    void on_startButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -34,15 +35,15 @@ private:
      * @brief draggable : If player/cursor can be dragged
      */
     bool draggable;
-    std::list<Vibration> vibrations;
+    std::list<Effect> effects;
 
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
     void goToNextScene();
 
-    void activateEffect(Vibration &vibration);
-    void deactivateEffect(Vibration &vibration);
+    void activateEffect(Effect& effect);
+    void deactivateEffect(Effect& effect);
 };
 
 #endif

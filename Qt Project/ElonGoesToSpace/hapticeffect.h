@@ -16,7 +16,7 @@ public:
 
     bool triggersEffect(QPoint cursorPosition);
 
-    std::list<Vibration> listTriggeredVibrations(QPoint cursorPosition);
+    std::list<Effect> listTriggeredEffects(QPoint cursorPosition);
 };
 
 #endif

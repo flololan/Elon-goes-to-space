@@ -6,7 +6,7 @@
 */
 enum class EffectType
 {
-    //VORTEX,
+    GROUND,
     //EAU,
     //SABLE,
     //VAGUE,

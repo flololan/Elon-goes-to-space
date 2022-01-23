@@ -1,12 +1,14 @@
 <RCC>
-    <qresource prefix="/assets">
-        <file>assets/draggableItems/asset_elon_on_rocket_to_iss.png</file>
-        <file>assets/draggableItems/asset_tiny_elon.png</file>
-        <file>assets/scenesImages/scene_elon_to_rocket.png</file>
-        <file>assets/scenesImages/scene_end.png</file>
-        <file>assets/scenesImages/scene_iss.png</file>
-        <file>assets/scenesImages/scene_iss_door.png</file>
-        <file>assets/scenesImages/scene_start.png</file>
-        <file>assets/scenesImages/scene-joystick.png</file>
+    <qresource prefix="/">
+        <file>assets/draggableitems/asset_elon_on_rocket_to_iss.png</file>
+        <file>assets/draggableitems/asset_tiny_elon.png</file>
+        <file>assets/scenesimages/scene_elon_to_rocket.png</file>
+        <file>assets/scenesimages/scene_end.png</file>
+        <file>assets/scenesimages/scene_iss.png</file>
+        <file>assets/scenesimages/scene_iss_door.png</file>
+        <file>assets/scenesimages/scene_start.png</file>
+        <file>assets/scenesimages/scene-joystick.png</file>
+        <file>scene_end.png</file>
+        <file>case0.png</file>
     </qresource>
 </RCC>

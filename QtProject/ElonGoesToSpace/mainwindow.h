@@ -41,7 +41,8 @@ private:
 
     void activateEffect(Effect effect);
     void activateHapticEffect(HapticEffect hapticEffect);
-    void deactivateEffect(Effect& effect);
+    void deactivateEffect(Effect effect);
+    void deactivateHapticEffect(HapticEffect hapticEffect);
 };
 
 #endif

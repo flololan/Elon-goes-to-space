@@ -106,6 +106,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 
 void MainWindow::goToNextScene()
 {
+    this->deactivateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
     scenes.currentScene++;
     this->activateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
     draggable = false;
@@ -146,42 +147,54 @@ void MainWindow::activateHapticEffect(HapticEffect hapticEffect){
     }
 }
 
+void MainWindow::deactivateHapticEffect(HapticEffect hapticEffect){
+    for(Effect effect : hapticEffect.effects) {
+        this->deactivateEffect(effect);
+    }
+}
+
 void MainWindow::activateEffect(Effect effect)
 {
-    qDebug() << "start effect";
-    if (effect.isActive)
-        return;
-    qDebug() << "start effect success";
-
-    effect.isActive = true;
-
+    effect.isActive;
     switch (effect.effectType)
     {
     case EffectType::GROUND:
-        if (hapticController->GetGround())
-        {
-            hapticController->GetGround()->Start();
-        }
+        hapticController->GetGround()->Start();
         break;
     case EffectType::STICK:
         hapticController->GetStick()->Start();
         break;
+    case EffectType::DOOR:
+        hapticController->GetDoor()->Start();
+        break;
+    case EffectType::LIFT:
+        hapticController->GetLift()->Start();
+        break;
+    case EffectType::PARKING:
+        hapticController->GetParking()->Start();
+        break;
     }
 }
 
-void MainWindow::deactivateEffect(Effect& effect)
+void MainWindow::deactivateEffect(Effect effect)
 {
-    if (!effect.isActive)
-        return;
-
     effect.isActive = false;
     switch (effect.effectType)
     {
     case EffectType::GROUND:
-        if (hapticController->GetGround())
-        {
-            hapticController->GetGround()->Stop();
-        }
+        hapticController->GetGround()->Stop();
+        break;
+    case EffectType::STICK:
+        hapticController->GetStick()->Stop();
+        break;
+    case EffectType::DOOR:
+        hapticController->GetDoor()->Stop();
+        break;
+    case EffectType::LIFT:
+        hapticController->GetLift()->Stop();
+        break;
+    case EffectType::PARKING:
+        hapticController->GetParking()->Stop();
         break;
      }
 }

@@ -7,6 +7,6 @@
         <file>assets/scenesimages/scene_iss.png</file>
         <file>assets/scenesimages/scene_iss_door.png</file>
         <file>assets/scenesimages/scene_start.png</file>
-        <file>assets/scenesimages/scene-joystick.png</file>
+        <file>assets/scenesimages/scene_joystick.png</file>
     </qresource>
 </RCC>

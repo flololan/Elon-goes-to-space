@@ -167,5 +167,5 @@ void MainWindow::onExitButtonClicked()
 void MainWindow::on_startButton_clicked()
 {
     goToNextScene();
-    ui->startButton->hide();
+    // ui->startButton->hide();
 }

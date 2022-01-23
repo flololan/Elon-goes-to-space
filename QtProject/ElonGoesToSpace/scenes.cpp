@@ -6,7 +6,7 @@ Scenes::Scenes()
 
     // Création à la main des pages de l'album
     // Attention, voir album.hpp pour le nombre de pages
-    currentScene = 0;
+    currentScene = -1;
 
     // TODO : Refaire les rectangles de collision
     scenes[0] = Scene(":/assets/scenesimages/scene_start.png", QPoint(1200, 1200), QPoint(0, 0), QPoint(0, 0));

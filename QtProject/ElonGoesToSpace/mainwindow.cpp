@@ -33,38 +33,57 @@ MainWindow::~MainWindow()
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
+    int mouseX = event->x();
     // If user clicks on player icon it can be dragged, otherwise nothing happens
     /*
     * @todo change this crap
     */
 
-    draggable = event->x() >= ui->draggableItem->x() && event->x() <= ui->draggableItem->x() + ui->draggableItem->height();
+    draggable = mouseX >= ui->draggableItem->x() && mouseX <= ui->draggableItem->x() + ui->draggableItem->height();
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
 {
-    // Si l'image ne dépasse pas du cadre à droite en bougeant, elle bouge
-    if (draggable && event->x() <= this->maximumWidth() - ui->draggableItem->width())
+    int mouseX = event->x();
+    int mouseY = event->y();
+
+    bool isDraggableItemInWindow = mouseX <= (this->maximumWidth() - ui->draggableItem->width());
+    bool draggableItemCanMove =draggable && isDraggableItemInWindow ;
+
+    if (draggableItemCanMove)
     {
-        switch (scenes.currentScene) // Le switch pour dire que dans certaines pages, on peut bouger aussi verticalement. C'est pas super beau, mais plus rapide que l'ajout d'un champ
+        // Le switch pour dire que dans certaines pages, on peut bouger aussi verticalement. C'est pas super beau, mais plus rapide que l'ajout d'un champ
+        switch (scenes.currentScene)
         {
         default:
-            ui->draggableItem->move(event->x(), event->y());
+            ui->draggableItem->move(
+                        mouseX -  (ui->draggableItem->width() / 2),
+                        mouseY -  (ui->draggableItem->height() / 2)
+           );
             break;
         case 1:
-            ui->draggableItem->move(event->x(), 400);
+            ui->draggableItem->move(
+                        event->x() - (ui->draggableItem->width() / 2),
+                        485 - ui->draggableItem->height()
+            );
             break;
         }
 
-        // Detection si une effect doit être créée
+        /*
         for (std::list<Effect>::iterator it = effects.begin(); it != effects.end(); it++)
         {
             this->activateEffect(*it);
         }
+        */
     }
 
     // Si on entre en collision avec le rectangle de collision, alors on change de page
-    if (scenes.collided(ui->draggableItem->x(), ui->draggableItem->y()) && (scenes.currentScene < scenes.scenesAmount - 1)) // diff derniere page
+    bool isCollision = scenes.collided(
+                ui->draggableItem->x(),
+                ui->draggableItem->y()
+    );
+
+    if (isCollision)
     {
         for (std::list<Effect>::iterator it = effects.begin(); it != effects.end(); it++)
         { // avant de changer de page on supprime les effets
@@ -89,6 +108,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 void MainWindow::goToNextScene()
 {
     scenes.currentScene++;
+    this->activateEffect(scenes.hapticEffects[scenes.currentScene]);
     draggable = false;
     effects = scenes.listTriggeredEffects(QPoint(ui->draggableItem->x(), ui->draggableItem->y()));
 

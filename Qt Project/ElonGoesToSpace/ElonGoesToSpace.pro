@@ -36,3 +36,6 @@ HEADERS  += mainwindow.h \
     effecttype.h
 
 FORMS    += mainwindow.ui
+
+DISTFILES += \
+    ../../assets/draggableItems/asset_tiny_elon.png

@@ -19,9 +19,20 @@ LIBS += "C:\Program Files\Immersion Corporation\IFC23\lib\IFC23.lib"
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    hapticcontroller.cpp
+    hapticcontroller.cpp \
+    scenes.cpp \
+    scene.cpp \
+    hapticeffect.cpp \
+    effect.cpp \
+    helper.cpp
 
 HEADERS  += mainwindow.h \
-    hapticcontroller.h
+    hapticcontroller.h \
+    scenes.h \
+    scene.h \
+    hapticeffect.h \
+    effect.h \
+    helper.h \
+    effecttype.h
 
 FORMS    += mainwindow.ui

@@ -20,14 +20,21 @@ public:
     ~HapticController();
 
     CImmCompoundEffect *GetGround() const;
+    CImmCompoundEffect *GetDoor() const;
+    CImmCompoundEffect *GetParking() const;
+    CImmCompoundEffect *GetLift() const;
+    CImmCompoundEffect *GetStick() const;
 
 private:
     CImmMouse *mMouse;
     CImmProject *mProject;
     MainWindow *mWindow;
 
-    // attributs album-enfant
     CImmCompoundEffect *mGround;
+    CImmCompoundEffect *mDoor;
+    CImmCompoundEffect *mParking;
+    CImmCompoundEffect *mLift;
+    CImmCompoundEffect *mStick;
 };
 
 #endif

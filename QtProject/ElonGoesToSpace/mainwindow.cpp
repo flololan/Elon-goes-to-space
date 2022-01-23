@@ -95,10 +95,6 @@ void MainWindow::goToNextScene()
 
     ui->scene->setPixmap((QPixmap((scenes.scenes[scenes.currentScene]).ressource->c_str())));
 
-    qDebug() << "update scene";
-
-    // On change l'apparence du personnage selon la valeur de bateau
-
     if(scenes.currentScene == 1) {
         ui->draggableItem->move(0, 400);
     }

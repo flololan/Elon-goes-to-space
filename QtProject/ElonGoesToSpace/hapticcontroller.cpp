@@ -29,6 +29,34 @@ HapticController::HapticController(MainWindow *fen) : mWindow(fen)
             delete mGround;
             mGround = NULL;
         }
+        mDoor = mProject->CreateEffect("Scene4-circle", mMouse, IMM_PARAM_NODOWNLOAD);
+        if (!mDoor)
+        {
+            qDebug() << "===>Error loading the door effect";
+            delete mDoor;
+            mDoor = NULL;
+        }
+        mStick = mProject->CreateEffect("Scene2-Stick", mMouse, IMM_PARAM_NODOWNLOAD);
+        if (!mStick)
+        {
+            qDebug() << "===>Error loading the stick effect";
+            delete mStick;
+            mStick = NULL;
+        }
+        mLift = mProject->CreateEffect("Scene1-Lift", mMouse, IMM_PARAM_NODOWNLOAD);
+        if (!mLift)
+        {
+            qDebug() << "===>Error loading the lift effect";
+            delete mLift;
+            mLift = NULL;
+        }
+        mParking = mProject->CreateEffect("Scene3-Parking", mMouse, IMM_PARAM_NODOWNLOAD);
+        if (!mParking)
+        {
+            qDebug() << "===>Error loading the parking effect";
+            delete mParking;
+            mParking = NULL;
+        }
     }
     else
     {
@@ -39,8 +67,24 @@ HapticController::HapticController(MainWindow *fen) : mWindow(fen)
 HapticController::~HapticController()
 { }
 
-// propre méthodes
+
 CImmCompoundEffect *HapticController::GetGround() const
 {
     return mGround;
+}
+CImmCompoundEffect *HapticController::GetDoor() const
+{
+    return mDoor;
+}
+CImmCompoundEffect *HapticController::GetParking() const
+{
+    return mParking;
+}
+CImmCompoundEffect *HapticController::GetLift() const
+{
+    return mLift;
+}
+CImmCompoundEffect *HapticController::GetStick() const
+{
+    return mStick;
 }

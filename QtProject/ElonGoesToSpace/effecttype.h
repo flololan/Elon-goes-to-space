@@ -7,11 +7,10 @@
 enum class EffectType
 {
     GROUND,
-    //EAU,
-    //SABLE,
-    //VAGUE,
-    //GEANT,
-    //BOUCHE
+    LIFT,
+    STICK,
+    PARKING,
+    DOOR
 };
 
 #endif

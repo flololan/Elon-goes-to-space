@@ -19,7 +19,7 @@ Scenes::Scenes()
     hapticEffects[0] = HapticEffect();
 
     hapticEffects[1] = HapticEffect(); // LIT
-    hapticEffects[1].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GROUND));
+    hapticEffects[1].addEffect(Effect(QPoint(0, 500), QPoint(500, 768), EffectType::GROUND));
 
     hapticEffects[2] = HapticEffect();
     // hapticEffects[2].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::VORTEX));

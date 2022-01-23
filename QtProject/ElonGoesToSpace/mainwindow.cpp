@@ -97,13 +97,17 @@ void MainWindow::goToScene(int sceneIndex)
 
     ui->scene->setPixmap((QPixmap((scenes.scenes[sceneIndex]).ressource->c_str())));
     ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_tiny_elon.png"));
+    ui->joystickButton->show();
     ui->draggableItem->hide();
 
     if (sceneIndex == 1 || sceneIndex == 3) {
         ui->draggableItem->show();
     }
     if (sceneIndex == 1) {
-        ui->draggableItem->move(0, 400);
+        ui->draggableItem->move(QPoint(0, 400));
+    }
+    if (sceneIndex == 2) {
+        ui->joystickButton->show();
     }
     if (sceneIndex == 3 )
     {

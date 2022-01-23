@@ -24,6 +24,8 @@ private slots:
     void on_startButton_clicked();
     void on_exitButton_clicked();
 
+    void on_joystickButton_pressed();
+
 private:
     Ui::MainWindow *ui;
     HapticController *hapticController;
@@ -37,10 +39,13 @@ private:
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void mouseReleaseEvent(QMouseEvent *event);
+    void goToScene(int sceneIndex);
     void goToNextScene();
 
-    void activateEffect(Effect& effect);
-    void deactivateEffect(Effect& effect);
+    void activateEffect(Effect effect);
+    void activateHapticEffect(HapticEffect hapticEffect);
+    void deactivateEffect(Effect effect);
+    void deactivateHapticEffect(HapticEffect hapticEffect);
 };
 
 #endif

@@ -11,6 +11,7 @@ public:
     std::list<Effect> effects;
 
     void stopEffects();
+    void startEffects();
 
     void addEffect(Effect effect);
 

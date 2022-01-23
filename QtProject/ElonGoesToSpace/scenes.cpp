@@ -3,10 +3,7 @@
 
 Scenes::Scenes()
 {
-
-    // Création à la main des pages de l'album
-    // Attention, voir album.hpp pour le nombre de pages
-    currentScene = -1;
+    currentScene = 0;
 
     // TODO : Refaire les rectangles de collision
     scenes[0] = Scene(":/assets/scenesimages/scene_start.png", QPoint(1200, 1200), QPoint(0, 0), QPoint(0, 0));
@@ -20,6 +17,7 @@ Scenes::Scenes()
 
     hapticEffects[1] = HapticEffect(); // LIT
     hapticEffects[1].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GROUND));
+    hapticEffects[1].addEffect(Effect(QPoint(500, 500), QPoint(1024, 768), EffectType::LIFT));
 
     hapticEffects[2] = HapticEffect();
     hapticEffects[2].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::STICK));

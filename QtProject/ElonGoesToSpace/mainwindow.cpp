@@ -19,9 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->exitButton->setVisible(false);
     // Pour initialiser l'scenes, on appelle goToNextScene sans changer le numéro de page (qui est donc à 0)
-    goToNextScene();
-
     this->hapticController = new HapticController(this);
+    this->goToScene(0);
 }
 
 MainWindow::~MainWindow()
@@ -68,13 +67,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
             );
             break;
         }
-
-        /*
-        for (std::list<Effect>::iterator it = effects.begin(); it != effects.end(); it++)
-        {
-            this->activateEffect(*it);
-        }
-        */
     }
 
     // Si on entre en collision avec le rectangle de collision, alors on change de page
@@ -83,108 +75,111 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
                 ui->draggableItem->y()
     );
 
-    if (isCollision)
-    {
-        for (std::list<Effect>::iterator it = effects.begin(); it != effects.end(); it++)
-        { // avant de changer de page on supprime les effets
-            this->deactivateEffect(*it);
-        }
-        goToNextScene();
-    }
+    if (isCollision) goToNextScene();
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (draggable)
-    {
-        for (std::list<Effect>::iterator it = effects.begin(); it != effects.end(); it++)
-        {
-            this->deactivateEffect(*it);
-        }
-    }
     draggable = false;
 }
 
-void MainWindow::goToNextScene()
+void MainWindow::goToNextScene(){
+    this->deactivateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
+    this->goToScene( scenes.currentScene + 1);
+}
+
+void MainWindow::goToScene(int sceneIndex)
 {
-    scenes.currentScene++;
-    this->activateEffect(scenes.hapticEffects[scenes.currentScene]);
+    scenes.currentScene = sceneIndex;
+    this->activateHapticEffect(scenes.hapticEffects[sceneIndex]);
     draggable = false;
     effects = scenes.listTriggeredEffects(QPoint(ui->draggableItem->x(), ui->draggableItem->y()));
 
-    ui->scene->setPixmap((QPixmap((scenes.scenes[scenes.currentScene]).ressource->c_str())));
+    ui->scene->setPixmap((QPixmap((scenes.scenes[sceneIndex]).ressource->c_str())));
+    ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_tiny_elon.png"));
+    ui->draggableItem->hide();
 
-    if(scenes.currentScene == 1) {
+    if (sceneIndex == 1 || sceneIndex == 3) {
+        ui->draggableItem->show();
+    }
+    if (sceneIndex == 1) {
         ui->draggableItem->move(0, 400);
     }
-    if (scenes.currentScene == 3 )
+    if (sceneIndex == 3 )
     {
-        ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_elon_on_rocket_to_iss.png").scaled(QSize(200, 200), Qt::KeepAspectRatio));
-        ui->draggableItem->setFixedWidth(200);
-        ui->draggableItem->setFixedHeight(200);
+        ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_elon_on_rocket_to_iss.png"));
+        ui->draggableItem->setFixedWidth(150);
+        ui->draggableItem->setFixedHeight(187);
     }
-    else
-    {
-        ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_tiny_elon.png").scaled(QSize(100, 100), Qt::KeepAspectRatio));
+    if (sceneIndex == 5){
+        ui->exitButton->setVisible(true);
     }
 
     // Place item on start position
     ui->draggableItem->move(
-                scenes.scenes[scenes.currentScene].cursorPosition.x(),
-            scenes.scenes[scenes.currentScene].cursorPosition.y()
+            scenes.scenes[sceneIndex].cursorPosition.x(),
+            scenes.scenes[sceneIndex].cursorPosition.y()
     );
-
-    /*
-    * @todo Find a better way to handle scene index
-    */
-    if (scenes.currentScene == 5)
-        ui->exitButton->setVisible(true);
 }
 
-void MainWindow::activateEffect(Effect& effect)
+void MainWindow::activateHapticEffect(HapticEffect hapticEffect){
+    for(Effect effect : hapticEffect.effects) {
+        this->activateEffect(effect);
+    }
+}
+
+void MainWindow::deactivateHapticEffect(HapticEffect hapticEffect){
+    for(Effect effect : hapticEffect.effects) {
+        this->deactivateEffect(effect);
+    }
+}
+
+void MainWindow::activateEffect(Effect effect)
 {
-    qDebug() << "start effect";
-    if (effect.isActive)
-        return;
-    qDebug() << "start effect success";
-
-    effect.isActive = true;
-
+    effect.isActive;
     switch (effect.effectType)
     {
     case EffectType::GROUND:
-        if (hapticController->GetGround())
-        {
-            hapticController->GetGround()->Start();
-        }
+        hapticController->GetGround()->Start();
+        break;
+    case EffectType::STICK:
+        hapticController->GetStick()->Start();
+        break;
+    case EffectType::DOOR:
+        hapticController->GetDoor()->Start();
+        break;
+    case EffectType::LIFT:
+        hapticController->GetLift()->Start();
+        break;
+    case EffectType::PARKING:
+        hapticController->GetParking()->Start();
         break;
     }
 }
 
-void MainWindow::deactivateEffect(Effect& effect)
+void MainWindow::deactivateEffect(Effect effect)
 {
-    if (!effect.isActive)
-        return;
-
     effect.isActive = false;
     switch (effect.effectType)
     {
     case EffectType::GROUND:
-        if (hapticController->GetGround())
-        {
-            hapticController->GetGround()->Stop();
-        }
+        hapticController->GetGround()->Stop();
+        break;
+    case EffectType::STICK:
+        hapticController->GetStick()->Stop();
+        break;
+    case EffectType::DOOR:
+        hapticController->GetDoor()->Stop();
+        break;
+    case EffectType::LIFT:
+        hapticController->GetLift()->Stop();
+        break;
+    case EffectType::PARKING:
+        hapticController->GetParking()->Stop();
         break;
      }
 }
 
-void MainWindow::on_startButton_clicked()
-{
-    goToNextScene();
-    // ui->startButton->hide();
-}
-
-void MainWindow::on_exitButton_clicked()
-{
-    QApplication::quit();
-}
+void MainWindow::on_startButton_clicked() { goToNextScene(); }
+void MainWindow::on_joystickButton_pressed() { goToNextScene(); }
+void MainWindow::on_exitButton_clicked() { QApplication::quit(); }

@@ -45,7 +45,7 @@ std::list<Effect> HapticEffect::listTriggeredEffects(QPoint cursorPosition)
 
     std::list<Effect> triggeredEffects;
 
-    for (std::list<Effect>::iterator it = effects.begin(); it != this->effects.end(); it++)
+    for (std::list<Effect>::iterator it = this->effects.begin(); it != this->effects.end(); it++)
     {
         if (Helper::pointsCollided(cursorPosition, it->colliderTopLeft, it->colliderBottomRight))
             triggeredEffects.push_back(*it);

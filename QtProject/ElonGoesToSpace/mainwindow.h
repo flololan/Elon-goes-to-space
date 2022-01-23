@@ -39,7 +39,8 @@ private:
     void mouseReleaseEvent(QMouseEvent *event);
     void goToNextScene();
 
-    void activateEffect(Effect& effect);
+    void activateEffect(Effect effect);
+    void activateHapticEffect(HapticEffect hapticEffect);
     void deactivateEffect(Effect& effect);
 };
 

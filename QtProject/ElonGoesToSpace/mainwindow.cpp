@@ -19,9 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->exitButton->setVisible(false);
     // Pour initialiser l'scenes, on appelle goToNextScene sans changer le numéro de page (qui est donc à 0)
-    goToNextScene();
-
     this->hapticController = new HapticController(this);
+    goToNextScene();
 }
 
 MainWindow::~MainWindow()
@@ -108,7 +107,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 void MainWindow::goToNextScene()
 {
     scenes.currentScene++;
-    this->activateEffect(scenes.hapticEffects[scenes.currentScene]);
+    this->activateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
     draggable = false;
     effects = scenes.listTriggeredEffects(QPoint(ui->draggableItem->x(), ui->draggableItem->y()));
 
@@ -130,7 +129,7 @@ void MainWindow::goToNextScene()
 
     // Place item on start position
     ui->draggableItem->move(
-                scenes.scenes[scenes.currentScene].cursorPosition.x(),
+            scenes.scenes[scenes.currentScene].cursorPosition.x(),
             scenes.scenes[scenes.currentScene].cursorPosition.y()
     );
 
@@ -141,7 +140,13 @@ void MainWindow::goToNextScene()
         ui->exitButton->setVisible(true);
 }
 
-void MainWindow::activateEffect(Effect& effect)
+void MainWindow::activateHapticEffect(HapticEffect hapticEffect){
+    for(Effect effect : hapticEffect.effects) {
+        this->activateEffect(effect);
+    }
+}
+
+void MainWindow::activateEffect(Effect effect)
 {
     qDebug() << "start effect";
     if (effect.isActive)
@@ -157,6 +162,9 @@ void MainWindow::activateEffect(Effect& effect)
         {
             hapticController->GetGround()->Start();
         }
+        break;
+    case EffectType::STICK:
+        hapticController->GetStick()->Start();
         break;
     }
 }

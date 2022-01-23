@@ -8,7 +8,5 @@
         <file>assets/scenesimages/scene_iss_door.png</file>
         <file>assets/scenesimages/scene_start.png</file>
         <file>assets/scenesimages/scene-joystick.png</file>
-        <file>scene_end.png</file>
-        <file>case0.png</file>
     </qresource>
 </RCC>

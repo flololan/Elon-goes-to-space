@@ -38,8 +38,7 @@ HEADERS  += mainwindow.h \
 FORMS    += mainwindow.ui
 
 RESOURCES += \
-        assets.qrc \
-        images.qrc
+        assets.qrc
 
 DISTFILES += \
     ../../assets/draggableItems/asset_tiny_elon.png

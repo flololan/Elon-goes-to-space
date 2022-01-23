@@ -9,12 +9,12 @@ Scenes::Scenes()
     currentScene = 0;
 
     // TODO : Refaire les rectangles de collision
-    scenes[0] = Scene(":/case0.png", QPoint(1200, 1200), QPoint(0, 0), QPoint(0, 0));
-    scenes[1] = Scene(":/assets/scenesImages/scene_elon_to_rocket.png", QPoint(620, 370), QPoint(520, 0), QPoint(550, 768));
-    scenes[2] = Scene(":/assets/scenesImages/scene_joystick.png", QPoint(900, 570), QPoint(450, 320), QPoint(550, 420));
-    scenes[3] = Scene(":/assets/scenesImages/scene_iss.png", QPoint(800, 570), QPoint(0, 0), QPoint(20, 768));
-    scenes[4] = Scene(":/assets/scenesImages/scene_iss_door.png", QPoint(900, 570), QPoint(0, 0), QPoint(20, 768));
-    scenes[5] = Scene(":/assets/scenesImages/scene_end.png", QPoint(900, 570), QPoint(0, 0), QPoint(450, 768));
+    scenes[0] = Scene(":/assets/scenesimages/scene_start.png", QPoint(1200, 1200), QPoint(0, 0), QPoint(0, 0));
+    scenes[1] = Scene(":/assets/scenesimages/scene_elon_to_rocket.png", QPoint(620, 370), QPoint(520, 0), QPoint(550, 768));
+    scenes[2] = Scene(":/assets/scenesimages/scene_joystick.png", QPoint(900, 570), QPoint(450, 320), QPoint(550, 420));
+    scenes[3] = Scene(":/assets/scenesimages/scene_iss.png", QPoint(800, 570), QPoint(0, 0), QPoint(20, 768));
+    scenes[4] = Scene(":/assets/scenesimages/scene_iss_door.png", QPoint(900, 570), QPoint(0, 0), QPoint(20, 768));
+    scenes[5] = Scene(":/assets/scenesimages/scene_end.png", QPoint(900, 570), QPoint(0, 0), QPoint(450, 768));
 
     // création modèle vibratoir (haha ça sonne tellement faux)
     hapticEffects[0] = HapticEffect();

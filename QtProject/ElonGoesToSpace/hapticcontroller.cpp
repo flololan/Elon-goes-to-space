@@ -18,7 +18,7 @@ HapticController::HapticController(MainWindow *fen) : mWindow(fen)
     }
 
     mProject = new CImmProject();
-    if (mProject->OpenFile("C:\\Users\\M2IHM\\Desktop\\Projet Retour Haptique de Jojo et Flo\\Qt Project\\ElonGoesToSpace\\assets\\HapticEffects.ifr", mMouse))
+    if (mProject->OpenFile("C:\\Users\\M2IHM\\Desktop\\ProjetFloetJojo\\projet_haptique\\QtProject\\ElonGoesToSpace\\assets\\HapticEffects.ifr", mMouse))
     {
         qDebug() << "IFR project has been loaded";
 

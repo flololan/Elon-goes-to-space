@@ -92,8 +92,8 @@ void MainWindow::goToNextScene()
 {
     draggable = false;
     effects = scenes.listTriggeredEffects(QPoint(ui->draggableItem->x(), ui->draggableItem->y()));
-    ui->
-    ui->label->setPixmap((QPixmap((scenes.scenes[scenes.currentScene]).ressource->c_str())));
+
+    ui->scene->setPixmap((QPixmap((scenes.scenes[scenes.currentScene]).ressource->c_str())));
 
     qDebug() << "update scene";
 

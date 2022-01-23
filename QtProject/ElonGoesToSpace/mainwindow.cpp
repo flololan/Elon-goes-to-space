@@ -67,13 +67,6 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
             );
             break;
         }
-
-        /*
-        for (std::list<Effect>::iterator it = effects.begin(); it != effects.end(); it++)
-        {
-            this->activateEffect(*it);
-        }
-        */
     }
 
     // Si on entre en collision avec le rectangle de collision, alors on change de page
@@ -82,54 +75,44 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
                 ui->draggableItem->y()
     );
 
-    if (isCollision)
-    {
-        for (std::list<Effect>::iterator it = effects.begin(); it != effects.end(); it++)
-        { // avant de changer de page on supprime les effets
-            this->deactivateEffect(*it);
-        }
-        goToNextScene();
-    }
+    if (isCollision) goToNextScene();
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
 {
-    if (draggable)
-    {
-        for (std::list<Effect>::iterator it = effects.begin(); it != effects.end(); it++)
-        {
-            this->deactivateEffect(*it);
-        }
-    }
     draggable = false;
 }
 
 void MainWindow::goToNextScene(){
-     this->deactivateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
-    scenes.currentScene++;
-    this->goToScene( scenes.currentScene);
+    this->deactivateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
+    this->goToScene( scenes.currentScene + 1);
 }
 
 void MainWindow::goToScene(int sceneIndex)
 {
+    scenes.currentScene = sceneIndex;
     this->activateHapticEffect(scenes.hapticEffects[sceneIndex]);
     draggable = false;
     effects = scenes.listTriggeredEffects(QPoint(ui->draggableItem->x(), ui->draggableItem->y()));
 
     ui->scene->setPixmap((QPixmap((scenes.scenes[sceneIndex]).ressource->c_str())));
+    ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_tiny_elon.png"));
+    ui->draggableItem->hide();
 
-    if(sceneIndex == 1) {
+    if (sceneIndex == 1 || sceneIndex == 3) {
+        ui->draggableItem->show();
+    }
+    if (sceneIndex == 1) {
         ui->draggableItem->move(0, 400);
     }
     if (sceneIndex == 3 )
     {
-        ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_elon_on_rocket_to_iss.png").scaled(QSize(200, 200), Qt::KeepAspectRatio));
-        ui->draggableItem->setFixedWidth(200);
-        ui->draggableItem->setFixedHeight(200);
+        ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_elon_on_rocket_to_iss.png"));
+        ui->draggableItem->setFixedWidth(150);
+        ui->draggableItem->setFixedHeight(187);
     }
-    else
-    {
-        ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_tiny_elon.png").scaled(QSize(100, 100), Qt::KeepAspectRatio));
+    if (sceneIndex == 5){
+        ui->exitButton->setVisible(true);
     }
 
     // Place item on start position
@@ -137,12 +120,6 @@ void MainWindow::goToScene(int sceneIndex)
             scenes.scenes[sceneIndex].cursorPosition.x(),
             scenes.scenes[sceneIndex].cursorPosition.y()
     );
-
-    /*
-    * @todo Find a better way to handle scene index
-    */
-    if (scenes.currentScene == 5)
-        ui->exitButton->setVisible(true);
 }
 
 void MainWindow::activateHapticEffect(HapticEffect hapticEffect){

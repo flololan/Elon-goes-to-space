@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "helper.h"
 #include <QLabel>
 #include <QTimer>
 #include <QMouseEvent>
@@ -52,16 +53,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
     if (draggableItemCanMove)
     {
-        // Le switch pour dire que dans certaines pages, on peut bouger aussi verticalement. C'est pas super beau, mais plus rapide que l'ajout d'un champ
-        switch (scenes.currentScene)
-        {
-        default:
-            ui->draggableItem->move(
-                        mouseX -  (ui->draggableItem->width() / 2),
-                        mouseY -  (ui->draggableItem->height() / 2)
-           );
-            break;
-        case 1:
+        if (scenes.currentScene == 1) {
             int y = this->getTinyElonYCoordinate();
 
             bool canTinyElonGoUpOnRocket = event->x() > 660
@@ -81,9 +73,21 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
                         event->x() - (ui->draggableItem->width() / 2),
                         y
             );
-            break;
+        } else {
+            ui->draggableItem->move(
+                        mouseX -  (ui->draggableItem->width() / 2),
+                        mouseY -  (ui->draggableItem->height() / 2)
+           );
+            if (scenes.currentScene == 3) {
+                bool isShuttleDocked = Helper::pointsCollided(
+                            QPoint(event->x(), event->y()),
+                            QPoint(200, 290),
+                            QPoint(260, 330)
+                );
+                if (isShuttleDocked) { this->goToNextScene(); }
+              }
         }
-    }
+}
 
     // Si on entre en collision avec le rectangle de collision, alors on change de page
     bool isCollision = scenes.collided(

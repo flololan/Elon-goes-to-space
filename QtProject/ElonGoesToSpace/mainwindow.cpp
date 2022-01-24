@@ -72,8 +72,8 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
     // Si on entre en collision avec le rectangle de collision, alors on change de page
     bool isCollision = scenes.collided(
-                ui->draggableItem->x(),
-                ui->draggableItem->y()
+                mouseX,
+                mouseY
     );
 
     if (isCollision) goToNextScene();

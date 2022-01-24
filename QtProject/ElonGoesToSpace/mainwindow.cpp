@@ -64,7 +64,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
         case 1:
             ui->draggableItem->move(
                         event->x() - (ui->draggableItem->width() / 2),
-                        485 - ui->draggableItem->height()
+                        this->getTinyElonYCoordinate()
             );
             break;
         }
@@ -105,7 +105,7 @@ void MainWindow::goToScene(int sceneIndex)
         ui->draggableItem->show();
     }
     if (sceneIndex == 1) {
-        ui->draggableItem->move(QPoint(0, 400));
+        ui->draggableItem->move(QPoint(0, this->getTinyElonYCoordinate()));
     }
     if (sceneIndex == 2) {
         ui->joystickButton->show();
@@ -115,6 +115,10 @@ void MainWindow::goToScene(int sceneIndex)
         ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_elon_on_rocket_to_iss.png"));
         ui->draggableItem->setFixedWidth(150);
         ui->draggableItem->setFixedHeight(187);
+        ui->draggableItem->move(QPoint(
+                                    this->maximumWidth() - ui->draggableItem->width() - 50,
+                                    this->maximumHeight() - ui->draggableItem->height() - 50
+                                    ));
     }
     if (sceneIndex == 4) {
         // go to next scene after 6seconds
@@ -123,15 +127,13 @@ void MainWindow::goToScene(int sceneIndex)
     if (sceneIndex == 5){
         ui->exitButton->setVisible(true);
     }
-
-    // Place item on start position
-    ui->draggableItem->move(
-            scenes.scenes[sceneIndex].cursorPosition.x(),
-            scenes.scenes[sceneIndex].cursorPosition.y()
-    );
 }
 
-void MainWindow::activateHapticEffect(HapticEffect hapticEffect){
+int MainWindow::getTinyElonYCoordinate() {
+    return 485 - ui->draggableItem->height();
+}
+
+void MainWindow::activateHapticEffect(HapticEffect hapticEffect) {
     for(Effect effect : hapticEffect.effects) {
         this->activateEffect(effect);
     }

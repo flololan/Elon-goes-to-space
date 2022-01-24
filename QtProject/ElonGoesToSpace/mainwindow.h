@@ -46,6 +46,8 @@ private:
     void activateHapticEffect(HapticEffect hapticEffect);
     void deactivateEffect(Effect effect);
     void deactivateHapticEffect(HapticEffect hapticEffect);
+
+    int MainWindow::getTinyElonYCoordinate();
 };
 
 #endif

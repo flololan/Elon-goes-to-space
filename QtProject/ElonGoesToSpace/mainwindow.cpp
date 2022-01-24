@@ -27,9 +27,12 @@ MainWindow::MainWindow(QWidget *parent) :
     // Pour initialiser l'scenes, on appelle goToNextScene sans changer le numéro de page (qui est donc à 0)
     this->hapticController = new HapticController(this);
 
-     player = new QMediaPlayer;
-     player->setMedia(QUrl("https://github.com/flololan/Elon-goes-to-space/raw/master/sf_elevator3.wav"));
-     player->setVolume(100);
+     playerLift = new QMediaPlayer;
+     playerDecollage  = new QMediaPlayer;
+     playerLift->setMedia(QUrl("https://github.com/flololan/Elon-goes-to-space/raw/master/QtProject/ElonGoesToSpace/assets/sf_elevator3.wav"));
+     playerDecollage->setMedia(QUrl("https://github.com/flololan/Elon-goes-to-space/raw/master/QtProject/ElonGoesToSpace/assets/scene2.wav"));
+     playerLift->setVolume(100);
+     playerDecollage->setVolume(100);
 
     this->goToScene(0);
 }
@@ -67,12 +70,15 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
             CImmCompoundEffect *liftEffect = this->hapticController->GetLift();
 
             bool canTinyElonGoUpOnRocket = Helper::pointsCollided(
-                        QPoint(event->x(), event->y()),
+                        QPoint(ui->draggableItem->x(), ui->draggableItem->y()),
                         QPoint(640, 0),
-                        QPoint(800, this->getTinyElonYCoordinate() + (ui->draggableItem->height() / 2))
+                        QPoint(800, this->getTinyElonYCoordinate() + (ui->draggableItem->height() / 1.8))
                         );
-            bool isTinyElonInShuttle = event->x() >= 700
-                    && event->y() <= 120;
+            bool isTinyElonInShuttle = Helper::pointsCollided(
+                        QPoint(event->x(), event->y()),
+                        QPoint(800, 0),
+                        QPoint(900, 400)
+             );
 
             if (isTinyElonInShuttle) {
                 liftEffect->Stop();
@@ -86,7 +92,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
                     qDebug() << "start";
                     liftEffect->Start();
 
-                    this->player->play();
+                    this->playerLift->play();
                 }
             }
 
@@ -141,6 +147,9 @@ void MainWindow::goToScene(int sceneIndex)
     ui->joystickButton->show();
     ui->draggableItem->hide();
 
+    this->playerLift->stop();
+    this->playerDecollage->stop();
+
     if (sceneIndex == 1 || sceneIndex == 3) {
         ui->draggableItem->show();
     }
@@ -148,6 +157,7 @@ void MainWindow::goToScene(int sceneIndex)
         ui->draggableItem->move(QPoint(0, this->getTinyElonYCoordinate()));
     }
     if (sceneIndex == 2) {
+        this->playerDecollage->play();
         ui->joystickButton->show();
     }
     if (sceneIndex == 3 )

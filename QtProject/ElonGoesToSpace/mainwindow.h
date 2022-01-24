@@ -30,7 +30,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     HapticController *hapticController;
-    QMediaPlayer *player;
+    QMediaPlayer *playerLift;
+    QMediaPlayer *playerDecollage;
 
     /**
      * @brief draggable : If player/cursor can be dragged

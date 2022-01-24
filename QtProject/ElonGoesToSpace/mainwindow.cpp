@@ -62,9 +62,24 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
            );
             break;
         case 1:
+            int y = this->getTinyElonYCoordinate();
+
+            bool canTinyElonGoUpOnRocket = event->x() > 660
+                    && event->x() < 800
+                    && event->y() < this->getTinyElonYCoordinate();
+            bool isTinyElonInShuttle = event->x() >= 700
+                    && event->y() <= 120;
+
+            if (isTinyElonInShuttle) {
+                this->goToNextScene();
+            }
+            if (canTinyElonGoUpOnRocket) {
+                y = event->y() - (ui->draggableItem->height() / 2);
+            }
+
             ui->draggableItem->move(
                         event->x() - (ui->draggableItem->width() / 2),
-                        this->getTinyElonYCoordinate()
+                        y
             );
             break;
         }

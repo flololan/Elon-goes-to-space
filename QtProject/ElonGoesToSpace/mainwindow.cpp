@@ -144,21 +144,28 @@ void MainWindow::goToScene(int sceneIndex)
 
     ui->scene->setPixmap((QPixmap((scenes.scenes[sceneIndex]).ressource->c_str())));
     ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_tiny_elon.png"));
-    ui->joystickButton->show();
+    ui->startButton->setVisible(false);
+    ui->joystickButton->setVisible(false);
     ui->draggableItem->hide();
 
     this->playerLift->stop();
     this->playerDecollage->stop();
 
+
+    if (sceneIndex ==0) {
+        ui->startButton->setVisible(true);
+    }
     if (sceneIndex == 1 || sceneIndex == 3) {
         ui->draggableItem->show();
     }
     if (sceneIndex == 1) {
         ui->draggableItem->move(QPoint(0, this->getTinyElonYCoordinate()));
+        ui->draggableItem->setFixedWidth(101);
+        ui->draggableItem->setFixedHeight(111);
     }
     if (sceneIndex == 2) {
         this->playerDecollage->play();
-        ui->joystickButton->show();
+        ui->joystickButton->setVisible(true);
     }
     if (sceneIndex == 3 )
     {
@@ -176,6 +183,9 @@ void MainWindow::goToScene(int sceneIndex)
     }
     if (sceneIndex == 5){
         ui->exitButton->setVisible(true);
+    }
+    if (sceneIndex == 6){
+        ui->exitButton->setVisible(false);
     }
 }
 

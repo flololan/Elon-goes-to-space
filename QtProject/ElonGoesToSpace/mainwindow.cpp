@@ -6,7 +6,10 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <list>
-#include <effect.h>
+#include <QtMultimedia/QMediaPlayer>
+#include <QUrl>
+#include <QString>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
 
@@ -15,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     // Initialisation de champs
     draggable = false;
+    isLiftEffectActive = false;
     scenes = Scenes();
 
     ui->setupUi(this);
@@ -22,6 +26,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->exitButton->setVisible(false);
     // Pour initialiser l'scenes, on appelle goToNextScene sans changer le numéro de page (qui est donc à 0)
     this->hapticController = new HapticController(this);
+
+     player = new QMediaPlayer;
+     player->setMedia(QUrl("https://github.com/flololan/Elon-goes-to-space/raw/master/sf_elevator3.wav"));
+     player->setVolume(100);
+
     this->goToScene(0);
 }
 
@@ -55,18 +64,30 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     {
         if (scenes.currentScene == 1) {
             int y = this->getTinyElonYCoordinate();
+            CImmCompoundEffect *liftEffect = this->hapticController->GetLift();
 
-            bool canTinyElonGoUpOnRocket = event->x() > 660
-                    && event->x() < 800
-                    && event->y() < this->getTinyElonYCoordinate();
+            bool canTinyElonGoUpOnRocket = Helper::pointsCollided(
+                        QPoint(event->x(), event->y()),
+                        QPoint(640, 0),
+                        QPoint(800, this->getTinyElonYCoordinate() + (ui->draggableItem->height() / 2))
+                        );
             bool isTinyElonInShuttle = event->x() >= 700
                     && event->y() <= 120;
 
             if (isTinyElonInShuttle) {
+                liftEffect->Stop();
                 this->goToNextScene();
             }
             if (canTinyElonGoUpOnRocket) {
                 y = event->y() - (ui->draggableItem->height() / 2);
+
+                if (!this->isLiftEffectActive) {
+                    isLiftEffectActive = true;
+                    qDebug() << "start";
+                    liftEffect->Start();
+
+                    this->player->play();
+                }
             }
 
             ui->draggableItem->move(

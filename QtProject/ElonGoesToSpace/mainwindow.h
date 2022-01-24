@@ -5,6 +5,7 @@
 #include <scenes.h>
 #include <hapticcontroller.h>
 #include <effect.h>
+#include <QMediaPlayer>
 
 namespace Ui
 {
@@ -29,11 +30,13 @@ private slots:
 private:
     Ui::MainWindow *ui;
     HapticController *hapticController;
+    QMediaPlayer *player;
 
     /**
      * @brief draggable : If player/cursor can be dragged
      */
     bool draggable;
+    bool isLiftEffectActive;
     std::list<Effect> effects;
 
     void mousePressEvent(QMouseEvent *event);

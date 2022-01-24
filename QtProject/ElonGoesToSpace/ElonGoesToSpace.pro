@@ -42,3 +42,7 @@ RESOURCES += \
 
 DISTFILES += \
     ../../assets/draggableItems/asset_tiny_elon.png
+
+QT += \
+    multimedia
+    core

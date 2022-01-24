@@ -18,7 +18,6 @@ Scenes::Scenes()
 
     hapticEffects[1] = HapticEffect(); // LIT
     hapticEffects[1].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GROUND));
-    hapticEffects[1].addEffect(Effect(QPoint(500, 500), QPoint(1024, 768), EffectType::LIFT));
 
     hapticEffects[2] = HapticEffect();
     hapticEffects[2].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::STICK));

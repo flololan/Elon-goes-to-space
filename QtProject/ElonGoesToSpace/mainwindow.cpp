@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QLabel>
+#include <QTimer>
 #include <QMouseEvent>
 #include <QDebug>
 #include <list>
@@ -115,6 +116,10 @@ void MainWindow::goToScene(int sceneIndex)
         ui->draggableItem->setFixedWidth(150);
         ui->draggableItem->setFixedHeight(187);
     }
+    if (sceneIndex == 4) {
+        // go to next scene after 6seconds
+        QTimer::singleShot(6000, this, &MainWindow::goToNextScene);
+    }
     if (sceneIndex == 5){
         ui->exitButton->setVisible(true);
     }
@@ -188,5 +193,7 @@ void MainWindow::on_startButton_clicked() { goToNextScene(); }
 void MainWindow::on_joystickButton_pressed() { goToNextScene(); }
 void MainWindow::on_exitButton_clicked() {
     goToNextScene();
-    QApplication::quit();
+
+    // close application after 2seconds to see the end scene
+    QTimer::singleShot(2000, this, &QApplication::quit);
 }

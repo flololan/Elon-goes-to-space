@@ -16,7 +16,6 @@ MainWindow::MainWindow(QWidget *parent) :
                                           QMainWindow(parent),
                                           ui(new Ui::MainWindow)
 {
-    // Initialisation de champs
     draggable = false;
     isLiftEffectActive = false;
     scenes = Scenes();
@@ -24,15 +23,14 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     ui->exitButton->setVisible(false);
-    // Pour initialiser l'scenes, on appelle goToNextScene sans changer le numéro de page (qui est donc à 0)
     this->hapticController = new HapticController(this);
-
-     playerLift = new QMediaPlayer;
-     playerDecollage  = new QMediaPlayer;
-     playerLift->setMedia(QUrl("https://github.com/flololan/Elon-goes-to-space/raw/master/QtProject/ElonGoesToSpace/assets/sf_elevator3.wav"));
-     playerDecollage->setMedia(QUrl("https://github.com/flololan/Elon-goes-to-space/raw/master/QtProject/ElonGoesToSpace/assets/scene2.wav"));
-     playerLift->setVolume(100);
-     playerDecollage->setVolume(100);
+    // init audio
+    playerLift = new QMediaPlayer;
+    playerDecollage = new QMediaPlayer;
+    playerLift->setMedia(QUrl("https://github.com/flololan/Elon-goes-to-space/raw/master/QtProject/ElonGoesToSpace/assets/sf_elevator3.wav"));
+    playerDecollage->setMedia(QUrl("https://github.com/flololan/Elon-goes-to-space/raw/master/QtProject/ElonGoesToSpace/assets/scene2.wav"));
+    playerLift->setVolume(100);
+    playerDecollage->setVolume(100);
 
     this->goToScene(0);
 }
@@ -48,10 +46,6 @@ void MainWindow::mousePressEvent(QMouseEvent *event)
 {
     int mouseX = event->x();
     // If user clicks on player icon it can be dragged, otherwise nothing happens
-    /*
-    * @todo change this crap
-    */
-
     draggable = mouseX >= ui->draggableItem->x() && mouseX <= ui->draggableItem->x() + ui->draggableItem->height();
 }
 
@@ -61,33 +55,35 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
     int mouseY = event->y();
 
     bool isDraggableItemInWindow = mouseX <= (this->maximumWidth() - ui->draggableItem->width());
-    bool draggableItemCanMove =draggable && isDraggableItemInWindow ;
+    bool draggableItemCanMove = draggable && isDraggableItemInWindow;
 
     if (draggableItemCanMove)
     {
-        if (scenes.currentScene == 1) {
+        if (scenes.currentScene == 1)
+        {
             int y = this->getTinyElonYCoordinate();
             CImmCompoundEffect *liftEffect = this->hapticController->GetLift();
 
             bool canTinyElonGoUpOnRocket = Helper::pointsCollided(
-                        QPoint(ui->draggableItem->x(), ui->draggableItem->y()),
-                        QPoint(640, 0),
-                        QPoint(800, this->getTinyElonYCoordinate() + (ui->draggableItem->height() / 1.8))
-                        );
+                QPoint(ui->draggableItem->x(), ui->draggableItem->y()),
+                QPoint(640, 0),
+                QPoint(800, this->getTinyElonYCoordinate() + (ui->draggableItem->height() / 1.8)));
             bool isTinyElonInShuttle = Helper::pointsCollided(
-                        QPoint(event->x(), event->y()),
-                        QPoint(800, 0),
-                        QPoint(900, 400)
-             );
+                QPoint(event->x(), event->y()),
+                QPoint(800, 0),
+                QPoint(900, 400));
 
-            if (isTinyElonInShuttle) {
+            if (isTinyElonInShuttle)
+            {
                 liftEffect->Stop();
                 this->goToNextScene();
             }
-            if (canTinyElonGoUpOnRocket) {
+            if (canTinyElonGoUpOnRocket)
+            {
                 y = event->y() - (ui->draggableItem->height() / 2);
 
-                if (!this->isLiftEffectActive) {
+                if (!this->isLiftEffectActive)
+                {
                     isLiftEffectActive = true;
                     qDebug() << "start";
                     liftEffect->Start();
@@ -97,32 +93,35 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
             }
 
             ui->draggableItem->move(
-                        event->x() - (ui->draggableItem->width() / 2),
-                        y
-            );
-        } else {
-            ui->draggableItem->move(
-                        mouseX -  (ui->draggableItem->width() / 2),
-                        mouseY -  (ui->draggableItem->height() / 2)
-           );
-            if (scenes.currentScene == 3) {
-                bool isShuttleDocked = Helper::pointsCollided(
-                            QPoint(event->x(), event->y()),
-                            QPoint(200, 290),
-                            QPoint(260, 330)
-                );
-                if (isShuttleDocked) { this->goToNextScene(); }
-              }
+                event->x() - (ui->draggableItem->width() / 2),
+                y);
         }
-}
+        else
+        {
+            ui->draggableItem->move(
+                mouseX - (ui->draggableItem->width() / 2),
+                mouseY - (ui->draggableItem->height() / 2));
+            if (scenes.currentScene == 3)
+            {
+                bool isShuttleDocked = Helper::pointsCollided(
+                    QPoint(event->x(), event->y()),
+                    QPoint(200, 290),
+                    QPoint(260, 330));
+                if (isShuttleDocked)
+                {
+                    this->goToNextScene();
+                }
+            }
+        }
+    }
 
-    // Si on entre en collision avec le rectangle de collision, alors on change de page
+    // If collision with rectangle, go to next scene
     bool isCollision = scenes.collided(
-                mouseX,
-                mouseY
-    );
+        mouseX,
+        mouseY);
 
-    if (isCollision) goToNextScene();
+    if (isCollision)
+        goToNextScene();
 }
 
 void MainWindow::mouseReleaseEvent(QMouseEvent *event)
@@ -130,9 +129,10 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event)
     draggable = false;
 }
 
-void MainWindow::goToNextScene(){
+void MainWindow::goToNextScene()
+{
     this->deactivateHapticEffect(scenes.hapticEffects[scenes.currentScene]);
-    this->goToScene( scenes.currentScene + 1);
+    this->goToScene(scenes.currentScene + 1);
 }
 
 void MainWindow::goToScene(int sceneIndex)
@@ -151,56 +151,66 @@ void MainWindow::goToScene(int sceneIndex)
     this->playerLift->stop();
     this->playerDecollage->stop();
 
-
-    if (sceneIndex ==0) {
+    if (sceneIndex == 0)
+    {
         ui->startButton->setVisible(true);
     }
-    if (sceneIndex == 1 || sceneIndex == 3) {
+    if (sceneIndex == 1 || sceneIndex == 3)
+    {
         ui->draggableItem->show();
     }
-    if (sceneIndex == 1) {
+    if (sceneIndex == 1)
+    {
         ui->draggableItem->move(QPoint(0, this->getTinyElonYCoordinate()));
         ui->draggableItem->setFixedWidth(101);
         ui->draggableItem->setFixedHeight(111);
     }
-    if (sceneIndex == 2) {
+    if (sceneIndex == 2)
+    {
         this->playerDecollage->play();
         ui->joystickButton->setVisible(true);
     }
-    if (sceneIndex == 3 )
+    if (sceneIndex == 3)
     {
         ui->draggableItem->setPixmap(QPixmap(":/assets/draggableitems/asset_elon_on_rocket_to_iss.png"));
         ui->draggableItem->setFixedWidth(150);
         ui->draggableItem->setFixedHeight(187);
         ui->draggableItem->move(QPoint(
-                                    this->maximumWidth() - ui->draggableItem->width() - 50,
-                                    this->maximumHeight() - ui->draggableItem->height() - 50
-                                    ));
+            this->maximumWidth() - ui->draggableItem->width() - 50,
+            this->maximumHeight() - ui->draggableItem->height() - 50));
     }
-    if (sceneIndex == 4) {
+    if (sceneIndex == 4)
+    {
         // go to next scene after 6seconds
         QTimer::singleShot(6000, this, &MainWindow::goToNextScene);
     }
-    if (sceneIndex == 5){
+    if (sceneIndex == 5)
+    {
         ui->exitButton->setVisible(true);
     }
-    if (sceneIndex == 6){
+    if (sceneIndex == 6)
+    {
         ui->exitButton->setVisible(false);
     }
 }
 
-int MainWindow::getTinyElonYCoordinate() {
+int MainWindow::getTinyElonYCoordinate()
+{
     return 485 - ui->draggableItem->height();
 }
 
-void MainWindow::activateHapticEffect(HapticEffect hapticEffect) {
-    for(Effect effect : hapticEffect.effects) {
+void MainWindow::activateHapticEffect(HapticEffect hapticEffect)
+{
+    for (Effect effect : hapticEffect.effects)
+    {
         this->activateEffect(effect);
     }
 }
 
-void MainWindow::deactivateHapticEffect(HapticEffect hapticEffect){
-    for(Effect effect : hapticEffect.effects) {
+void MainWindow::deactivateHapticEffect(HapticEffect hapticEffect)
+{
+    for (Effect effect : hapticEffect.effects)
+    {
         this->deactivateEffect(effect);
     }
 }
@@ -248,12 +258,13 @@ void MainWindow::deactivateEffect(Effect effect)
     case EffectType::PARKING:
         hapticController->GetParking()->Stop();
         break;
-     }
+    }
 }
 
 void MainWindow::on_startButton_clicked() { goToNextScene(); }
 void MainWindow::on_joystickButton_pressed() { goToNextScene(); }
-void MainWindow::on_exitButton_clicked() {
+void MainWindow::on_exitButton_clicked()
+{
     goToNextScene();
 
     // close application after 2seconds to see the end scene

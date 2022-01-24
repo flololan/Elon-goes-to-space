@@ -26,4 +26,4 @@ public:
     std::list<Effect> listTriggeredEffects(QPoint cursorPosition);
 };
 
-#endif // ALBUM_H
+#endif

@@ -1,11 +1,10 @@
 #include "scenes.h"
-#include "effecttype.h"      
+#include "effecttype.h"
 
 Scenes::Scenes()
 {
     currentScene = 0;
 
-    // TODO : Refaire les rectangles de collision
     scenes[0] = Scene(":/assets/scenesimages/scene_start.png", QPoint(1200, 1200), QPoint(0, 0), QPoint(0, 0));
     scenes[1] = Scene(":/assets/scenesimages/scene_elon_to_rocket.png", QPoint(620, 370), QPoint(520, 0), QPoint(550, 768));
     scenes[2] = Scene(":/assets/scenesimages/scene_joystick.png", QPoint(900, 570), QPoint(450, 320), QPoint(550, 420));
@@ -16,7 +15,7 @@ Scenes::Scenes()
 
     hapticEffects[0] = HapticEffect();
 
-    hapticEffects[1] = HapticEffect(); // LIT
+    hapticEffects[1] = HapticEffect();
     hapticEffects[1].addEffect(Effect(QPoint(0, 0), QPoint(1024, 768), EffectType::GROUND));
 
     hapticEffects[2] = HapticEffect();

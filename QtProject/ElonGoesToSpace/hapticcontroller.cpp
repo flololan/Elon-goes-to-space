@@ -6,7 +6,7 @@
 HapticController::HapticController(MainWindow *fen) : mWindow(fen)
 {
 
-    //Initialisation de la souris
+    // Mouse initialisation
     mMouse = new CImmMouse();
 
     if (!mMouse->Initialize(qWinAppInst(), (HWND)mWindow->effectiveWinId()))
@@ -65,8 +65,8 @@ HapticController::HapticController(MainWindow *fen) : mWindow(fen)
 }
 
 HapticController::~HapticController()
-{ }
-
+{
+}
 
 CImmCompoundEffect *HapticController::GetGround() const
 {
